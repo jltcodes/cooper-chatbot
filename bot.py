@@ -16,28 +16,27 @@ api_key = st.secrets["default"]["GOOGLE_API_KEY"]
 # Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
+def clear_cache():
+    """Clear Streamlit cache to ensure fresh data is used."""
+    st.cache_data.clear()
+    st.cache_resource.clear()
+
 def get_google_sheets_data(sheet_names):
     """Fetch data from multiple Google Sheets with error handling."""
     all_data = []
     
     for sheet in sheet_names:
         try:
-            # Check if the sheet exists and fetch data
-            # st.write(f"Reading data from sheet: {sheet}")
             data = conn.read(worksheet=sheet)
-            
             if not data.empty:
-                # Append the data as a string
                 all_data.append(data.to_string(index=False))
             else:
                 st.warning(f"No data found in the Google Sheet: {sheet}")
         
         except Exception as e:
-            # Catch any exceptions (e.g., sheet doesn't exist, connection issues)
             st.error(f"Error reading sheet '{sheet}': {str(e)}")
     
     if all_data:
-        # Combine data from all sheets into a single string if data exists
         return "\n".join(all_data)
     else:
         st.error("No data was retrieved from any of the provided sheets.")
@@ -95,12 +94,10 @@ def user_input(user_question, api_key):
     st.write("Reply: \n\n", reply_text)
 
     if "Sorry my data is not yet trained for that question" in reply_text:
-        # st.write(f"Storing unknown question: {user_question}")  # Debug print
         store_unknown_question_to_sheets(user_question)
 
 # Main App
 def main():
-    
     hide_st_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -111,6 +108,9 @@ def main():
     st.markdown(hide_st_style, unsafe_allow_html=True)
     
     st.title("Hi, I'm Cooper!")
+
+    # Clear the cache every time the main function is called
+    clear_cache()
     
     # Define the names of the sheets you want to access
     sheet_names = ["general_data", "schedule_data"]  # Add more sheet names as needed
