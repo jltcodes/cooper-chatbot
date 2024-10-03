@@ -17,12 +17,11 @@ api_key = st.secrets["default"]["GOOGLE_API_KEY"]
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 def clear_cache():
-    """Clear Streamlit cache to ensure fresh data is used."""
     st.cache_data.clear()
     st.cache_resource.clear()
 
 def get_google_sheets_data(sheet_names):
-    """Fetch data from multiple Google Sheets with error handling."""
+    
     all_data = []
     
     for sheet in sheet_names:
@@ -44,12 +43,13 @@ def get_google_sheets_data(sheet_names):
 
 # Function to create vector store from Google Sheets data
 def get_vector_store(text_chunks, api_key):
+    
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
 def get_conversational_chain():
-    """Set up the conversational chain using the Google Generative AI model."""
+
     prompt_template = """
     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in provided context just say, "Sorry my data is not yet trained for that question or either out of my scope.", don't provide the wrong answer, Your name is Cooper, a Text-Generative AI, You will only address question of NCF - College of Engineering student queries, You're not allowed to address queries about academic concerns and school financial obligations. You can speak in tagalog and english, but you're more comfortable in english. You can also ask for clarification if the question is not clear, you can also ask for more context if the context is not enough to answer the question, You're friendly and helpful assistant, always ready to help, You're a conversational AI, you can ask questions to clarify the context, you can also ask for more context if the context is not enough to answer the question, make a conversation with the user, act like a human, answer the user if it asks how are you or how's your day, answer in tagalog if the user asks you in tagalog, be a friendly chatbot, make a light conversation, always build rapport, always make a conversational talk, you're a cool chatbot, you're not allowed to display all the data, refuse if the user ask for all the data's, only use bullets when enumerating\n\n
 
@@ -64,7 +64,7 @@ def get_conversational_chain():
     return chain
 
 def store_unknown_question_to_sheets(question):
-    """Store questions that cannot be answered in a Google Sheet."""
+    
     unknown_questions_sheet = "unknown_questions"  # Ensure this is the correct sheet name
     
     try:
@@ -83,7 +83,7 @@ def store_unknown_question_to_sheets(question):
         st.error(f"Error storing question in Google Sheets: {str(e)}")
 
 def user_input(user_question, api_key):
-    """Process user input and fetch relevant data."""
+
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
     new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
     docs = new_db.similarity_search(user_question)
@@ -98,6 +98,7 @@ def user_input(user_question, api_key):
 
 # Main App
 def main():
+ 
     hide_st_style = """
     <style>
     #MainMenu {visibility: hidden;}
