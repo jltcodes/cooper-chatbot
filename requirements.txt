@@ -1,0 +1,9 @@
+streamlit
+google-generativeai
+langchain
+chromadb
+faiss-cpu
+langchain_google_genai
+st-gsheets-connection
+langchain-community
+pandas

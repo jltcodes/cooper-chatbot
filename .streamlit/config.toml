@@ -1,0 +1,7 @@
+[theme]
+base="dark"
+primaryColor="#4bff7e"
+font="monospace"
+
+[ui]
+hideMenuItems = ["reportGitIssue"]
