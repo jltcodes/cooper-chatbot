@@ -100,7 +100,15 @@ def user_input(user_question, api_key):
 
 # Main App
 def main():
-    """Main function for the app."""
+    
+    hide_st_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+    """
+    
     st.title("Hi, I'm Cooper!")
     
     # Define the names of the sheets you want to access
