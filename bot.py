@@ -80,7 +80,7 @@ def user_input(user_question, api_key):
     with open('styles.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
         
-    with st.container(height=300):
+    with st.container(height=290):
 
         with st.spinner("Thinking..."):
             embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
