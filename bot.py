@@ -104,14 +104,14 @@ def fetch_data_in_background(sheet_names):
 
 # Main App
 def main():
-    # hide_st_style = """
-    # <style>
-    # #MainMenu {visibility: hidden;}
-    # footer {visibility: hidden;}
-    # header {visibility: hidden;}
-    # </style>
-    # """
-    # st.markdown(hide_st_style, unsafe_allow_html=True)
+    hide_st_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+    """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
     
     st.title("Hi, I'm Cooper!")
 
