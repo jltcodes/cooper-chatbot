@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 import pandas as pd
 import threading
 
-st.set_page_config(page_title="Cooper", layout="wide")
+st.set_page_config(page_title="Cooper", layout="centered")
 
 # Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
