@@ -14,6 +14,9 @@ st.set_page_config(page_title="Cooper", layout="centered")
 # Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
 
+prompt_template = st.secrets["custom"]["prompt_template"]
+sheet_names = st.secrets["custom"]["sheet_names"]
+
 # Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -44,19 +47,7 @@ def get_vector_store(text_chunks, api_key):
     vector_store.save_local("faiss_index")
 
 def get_conversational_chain():
-    # Updated prompt template to use 'documents' as the variable name
-    prompt_template = """
-     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in provided context just say, "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊", don't provide the wrong answer, Your name is Cooper, a Text-Generative AI, You will only address question of NCF - College of Engineering student queries, You're not allowed to address queries about academic concerns and school financial obligations. You can speak in tagalog and english, but you're more comfortable in english. You can also ask for clarification if the question is not clear, you can also ask for more context if the context is not enough to answer the question, You're friendly and helpful assistant, always ready to help, You're a conversational AI, you can ask questions to clarify the context, you can also ask for more context if the context is not enough to answer the question, make a conversation with the user, act like a human, answer the user if it asks how are you or how's your day, answer in tagalog if the user asks you in tagalog, be a friendly chatbot, make a light conversation, always build rapport, always make a conversational talk, you're a cool chatbot, you're not allowed to display all the data, refuse if the user ask for all the data's, use a correct listing format when enumerating, indent it properly and group it properly according to the data but still always in a conversational manner\n\n
-    
-    Context:
-    {documents}
-    
-    Question: 
-    {question}
-    
-    Answer:
-    """
-    
+    # Prompt template now retrieved from secrets
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, google_api_key=api_key)
     prompt = PromptTemplate(template=prompt_template, input_variables=["documents", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt, document_variable_name="documents")
@@ -80,7 +71,7 @@ def user_input(user_question, api_key):
     with open('styles.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
         
-    st.write("**Coopeer:**")    
+    st.write("**Cooper:**")    
     with st.container(height=290):
 
         with st.spinner("Thinking..."):
@@ -107,29 +98,20 @@ def fetch_data_in_background(sheet_names):
 
 # Main App
 def main():
-    hide_st_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-    """
-    st.markdown(hide_st_style, unsafe_allow_html=True)
+    # hide_st_style = """
+    # <style>
+    # #MainMenu {visibility: hidden;}
+    # footer {visibility: hidden;}
+    # header {visibility: hidden;}
+    # </style>
+    # """
+    # st.markdown(hide_st_style, unsafe_allow_html=True)
     
     st.title("Hi, I'm Cooper!")
 
     # Clear the cache every time the main function is called
     clear_cache()
     
-    # Define the names of the sheets you want to access
-    sheet_names = ["general_data", "schedule_data"]
-
-    # Custom placeholder for loading message
-    loading_placeholder = st.empty()
-    
-    with loading_placeholder.container():
-        st.text("")
-
     # Start fetching data in a separate thread
     data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
     data_fetch_thread.start()
