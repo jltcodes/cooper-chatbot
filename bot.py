@@ -139,7 +139,7 @@ def main():
     page = st.sidebar.selectbox("Select Page", ["Chat", "Instructions", "About", "Contact"])
 
     # Home Page
-    if page == "Home":
+    if page == "Chat":
         st.header("Hi, I'm Cooper!")
                 
         # Clear the cache every time the home page is called
