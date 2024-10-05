@@ -101,8 +101,9 @@ def user_input(user_question, api_key):
         
         st.markdown(f"<div style='text-align: justify;'>{reply_text}</div>", unsafe_allow_html=True)
         
-        if "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊" in reply_text:
-            store_unknown_question_to_sheets(user_question)
+    if "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊" in reply_text:
+        store_unknown_question_to_sheets(user_question)
+            
 
 # This will fetch the data in a separate thread to avoid showing the spinner.
 def fetch_data_in_background(sheet_names):
