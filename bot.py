@@ -8,6 +8,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 import pandas as pd
 import threading
+from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Cooper", layout="centered")
 
@@ -135,8 +136,20 @@ def main():
     st.markdown(hide_st_style, unsafe_allow_html=True)
 
     # Sidebar content
-    st.sidebar.header("Navigation Menu")
-    page = st.sidebar.selectbox("Select Page", ["Chat", "Instructions", "About", "Contact"])
+    with st.sidebar:
+        st.subheader("Menu")
+        page = option_menu(
+            menu_title = None, 
+            options = ["Chat", "Guides", "About", "Contact"], 
+            icons = ['chat-text', 'list-ol', 'info-circle', 'telephone'],
+            menu_icon = "cast",
+               styles={
+                    "container": {"padding": "3px", "background-color": "#0e1117", "border-radius": "10px", "border-shadow": "0px 0px 10px 0px rgba(0,0,0,0.5)"},
+                    "icon": {"color": "white", "font-size": "17px"}, 
+                    "nav-link": {"font-size": "17px", "text-align": "left", "margin":"5px", "--hover-color": "#262730", "font-family": "monospace", "border-radius": "10px"},
+                    "nav-link-selected": {"background-color": "#096F4E", "border-radius": "10px"},
+    })
+        
 
     # Home Page
     if page == "Chat":
@@ -175,8 +188,8 @@ def main():
         """, unsafe_allow_html=True)
 
     # Instructions Page
-    elif page == "Instructions":
-        st.header("Instructions")
+    elif page == "Guides":
+        st.header("Tips!")
         st.write("Here are some tips to interact with Cooper:")
         st.markdown("""
         <ul>
