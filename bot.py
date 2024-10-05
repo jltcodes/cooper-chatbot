@@ -144,7 +144,7 @@ def main():
             icons = ['chat-text', 'list-ol', 'info-circle', 'telephone'],
             menu_icon = "cast",
                styles={
-                    "container": {"padding": "3px", "background-color": "#0e1117", "border-radius": "10px", "border-shadow": "0px 0px 10px 0px rgba(0,0,0,0.5)"},
+                    "container": {"padding": "3px", "background-color": "#0e1117", "border-radius": "10px"},
                     "icon": {"color": "white", "font-size": "17px"}, 
                     "nav-link": {"font-size": "17px", "text-align": "left", "margin":"5px", "--hover-color": "#262730", "font-family": "monospace", "border-radius": "10px"},
                     "nav-link-selected": {"background-color": "#096F4E", "border-radius": "10px"},
