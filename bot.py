@@ -90,6 +90,7 @@ def user_input(user_question, api_key):
             response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
             reply_text = response["output_text"]
             st.write("Reply: \n\n", reply_text)
+            
             if "Sorry my data is not yet trained for that question" in reply_text:
                 store_unknown_question_to_sheets(user_question)
 
