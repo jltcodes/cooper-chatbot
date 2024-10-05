@@ -14,9 +14,6 @@ st.set_page_config(page_title="Cooper", layout="centered")
 # Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
 
-prompt_template = st.secrets["custom"]["prompt_template"]
-sheet_names = st.secrets["custom"]["sheet_names"]
-
 # Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -47,7 +44,31 @@ def get_vector_store(text_chunks, api_key):
     vector_store.save_local("faiss_index")
 
 def get_conversational_chain():
-    # Prompt template now retrieved from secrets
+    # Updated prompt template to use 'documents' as the variable name
+    prompt_template = """
+        Answer the question in detail using the provided context. If the answer is not available, respond with:
+        "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊". 
+        Do not provide incorrect answers.
+
+        Your name is Cooper, a friendly and conversational Text-Generative AI for NCF - College of Engineering student queries. 
+        Avoid answering questions about academic concerns or financial obligations. You can communicate in both English and Tagalog, but you're more comfortable in English.
+
+        - Ask for clarification if the question is unclear or if more context is needed.
+        - Make the conversation light and friendly, building rapport as a cool chatbot.
+        - Answer in Tagalog if asked in Tagalog.
+        - Use proper formatting and indentation when listing information.
+        - Politely refuse if asked to display all data.
+
+        Context:
+        {documents}
+
+        Question: 
+        {question}
+
+        Answer:
+        """
+
+    
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, google_api_key=api_key)
     prompt = PromptTemplate(template=prompt_template, input_variables=["documents", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt, document_variable_name="documents")
@@ -71,7 +92,7 @@ def user_input(user_question, api_key):
     with open('styles.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
         
-    st.write("**Cooper:**")    
+    st.write("**Coopeer:**")    
     with st.container(height=290):
 
         with st.spinner("Thinking..."):
@@ -98,20 +119,29 @@ def fetch_data_in_background(sheet_names):
 
 # Main App
 def main():
-    # hide_st_style = """
-    # <style>
-    # #MainMenu {visibility: hidden;}
-    # footer {visibility: hidden;}
-    # header {visibility: hidden;}
-    # </style>
-    # """
-    # st.markdown(hide_st_style, unsafe_allow_html=True)
+    hide_st_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+    """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
     
     st.title("Hi, I'm Cooper!")
 
     # Clear the cache every time the main function is called
     clear_cache()
     
+    # Define the names of the sheets you want to access
+    sheet_names = ["general_data", "schedule_data"]
+
+    # Custom placeholder for loading message
+    loading_placeholder = st.empty()
+    
+    with loading_placeholder.container():
+        st.text("")
+
     # Start fetching data in a separate thread
     data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
     data_fetch_thread.start()
