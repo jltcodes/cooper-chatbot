@@ -89,7 +89,7 @@ def store_unknown_question_to_sheets(question):
 
 def user_input(user_question, api_key):
             
-    st.write("**Coopeer:**")    
+    st.write("**Cooper:**")    
 
     with st.spinner("Thinking..."):
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=api_key)
