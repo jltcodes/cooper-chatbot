@@ -142,10 +142,7 @@ def main():
     [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
         width: 244px;
     }
-    [data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
-        width: 100px;
-        margin-left: -300px;
-    }
+
     </style>
     """,
     unsafe_allow_html=True,
