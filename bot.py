@@ -136,7 +136,7 @@ def main():
 
     # Sidebar content
     st.sidebar.header("Navigation Menu")
-    page = st.sidebar.selectbox("Select Page", ["Home", "Instructions", "About", "Contact"])
+    page = st.sidebar.selectbox("Select Page", ["Chat", "Instructions", "About", "Contact"])
 
     # Home Page
     if page == "Home":
