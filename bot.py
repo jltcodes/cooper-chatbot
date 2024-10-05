@@ -134,6 +134,22 @@ def main():
     </style>
     """
     st.markdown(hide_st_style, unsafe_allow_html=True)
+    
+    # set sidebar width
+    st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
+        width: 244px;
+    }
+    [data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
+        width: 100px;
+        margin-left: -300px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
 
     # Sidebar content
     with st.sidebar:
