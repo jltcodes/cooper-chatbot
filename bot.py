@@ -133,23 +133,63 @@ def main():
     </style>
     """
     st.markdown(hide_st_style, unsafe_allow_html=True)
-    
-    st.header("Hi, I'm Cooper!")
 
-    # Clear the cache every time the main function is called
-    clear_cache()
-    
-    # Define the names of the sheets you want to access
-    sheet_names = ["general_data", "schedule_data"]
+    # Sidebar content
+    st.sidebar.header("Navigation Menu")
+    page = st.sidebar.selectbox("Select Page", ["Home", "About", "Instructions", "Contact"])
 
-    # Start fetching data in a separate thread
-    data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
-    data_fetch_thread.start()
+    # Home Page
+    if page == "Home":
+        st.header("Hi, I'm Cooper!")
+                
+        # Clear the cache every time the home page is called
+        clear_cache()
 
-    # Ask user a question
-    user_question = st.text_input("Ask me a question...", key="user_question")
-    if user_question and api_key:
-        user_input(user_question, api_key)
+        # Define the names of the sheets you want to access
+        sheet_names = ["general_data", "schedule_data"]
 
+        # Start fetching data in a separate thread
+        data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
+        data_fetch_thread.start()
+
+        # Ask user a question
+        user_question = st.text_input("Ask me a question...", key="user_question")
+        if user_question and api_key:
+            user_input(user_question, api_key)
+
+    # About Page
+    elif page == "About":
+        st.header("About Cooper")
+        st.write(" Cooper is a text-generative AI developed in 2024 by Jay, Emil, Hans, and Erica from NCF - College of Engineering. This friendly chatbot is designed to assist students at NCF - College of Engineering. It can answer questions about various topics related to the NCF - College of Engineering and provide guidance. However, please note that Cooper cannot address queries about academic or school financial obligations.")
+
+    # Contact Page
+    elif page == "Contact":
+        st.header("Contact Us")
+        st.write("For further assistance, please reach out to:")
+        st.markdown("""
+        <ul>
+            <li>Address: NCF - College of Engineering, MT. Villanueva Ave., Naga City, Philippines</li>
+            <li>Email: support@ncf.edu</li>
+            <li>Phone: (123) 456-7890</li>
+        </ul>
+        """, unsafe_allow_html=True)
+
+    # Instructions Page
+    elif page == "Instructions":
+        st.header("Instructions")
+        st.write("Here are some tips to interact with Cooper:")
+        st.markdown("""
+        <ul>
+            <li>Ask anything related to NCF - College of Engineering.</li>
+            <li>Use clear and concise questions for better responses.</li>
+            <li>Use clear and concise questions for better responses.</li>
+            <li>Provide context when asking specific questions to improve accuracy.</li>
+            <li>If Cooper doesn’t understand your question, try rephrasing it.</li>
+            <li>Be patient; sometimes it may take a moment to generate a response.</li>
+            <li>Remember that Cooper cannot answer academic concerns or financial obligations.</li>
+        </ul>
+        """, unsafe_allow_html=True)
+     
 if __name__ == "__main__":
     main()
+
