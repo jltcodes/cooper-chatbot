@@ -186,7 +186,7 @@ def main():
     # About Page
     elif page == "About":
         st.header("About Cooper")
-        st.write(" Cooper is a text-generative AI developed in 2024 by Jay, Emil, Hans, and Erica from NCF - College of Engineering. This friendly chatbot is designed to assist students at NCF - College of Engineering. It can answer questions about various topics related to the NCF - College of Engineering and provide guidance. However, please note that Cooper cannot address queries about academic or school financial obligations.")
+        st.write(' **Collaborative Operations for Optimizing Practical Engineering Resources** (COOPER) is a text-generative AI developed in 2024 by Jay, Emil, Hans, and Erica from NCF - College of Engineering. This friendly chatbot is designed to assist students at NCF - College of Engineering. It can answer questions about various topics related to the NCF - College of Engineering and provide guidance. However, please note that Cooper cannot address queries about academic or school financial obligations.')
 
     # Contact Page
     elif page == "Contact":
@@ -208,11 +208,10 @@ def main():
         <ul>
             <li>Ask anything related to NCF - College of Engineering.</li>
             <li>Use clear and concise questions for better responses.</li>
-            <li>Use clear and concise questions for better responses.</li>
             <li>Provide context when asking specific questions to improve accuracy.</li>
             <li>If Cooper doesn’t understand your question, try rephrasing it.</li>
             <li>Be patient; sometimes it may take a moment to generate a response.</li>
-            <li>Remember that Cooper cannot answer academic concerns or financial obligations.</li>
+            <li>Remember that Cooper cannot answer academic concerns or school financial obligations queries.</li>
         </ul>
         """, unsafe_allow_html=True)
      
