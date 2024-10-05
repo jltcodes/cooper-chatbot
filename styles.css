@@ -1,3 +1,10 @@
 div.st-emotion-cache-pkurt4.e1f1d6gn0 {
   border: none;
 }
+
+div.stAppViewBlockContainer.block-container.st-emotion-cache-13ln4jf.ea3mdgi5 {
+  overflow: hidden;
+  @media (max-height: 100%) {
+    overflow: auto;
+  }
+}

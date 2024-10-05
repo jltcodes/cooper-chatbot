@@ -80,6 +80,7 @@ def user_input(user_question, api_key):
     with open('styles.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
         
+    st.write("**Coopeer:**")    
     with st.container(height=290):
 
         with st.spinner("Thinking..."):
@@ -89,7 +90,8 @@ def user_input(user_question, api_key):
             chain = get_conversational_chain()
             response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
             reply_text = response["output_text"]
-            st.write("Reply: \n\n", reply_text)
+           
+            st.markdown(f"<div style='text-align: justify;'>{reply_text}</div>", unsafe_allow_html=True)
             
             if "Sorry my data is not yet trained for that question" in reply_text:
                 store_unknown_question_to_sheets(user_question)
@@ -105,14 +107,14 @@ def fetch_data_in_background(sheet_names):
 
 # Main App
 def main():
-    hide_st_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-    """
-    st.markdown(hide_st_style, unsafe_allow_html=True)
+    # hide_st_style = """
+    # <style>
+    # #MainMenu {visibility: hidden;}
+    # footer {visibility: hidden;}
+    # header {visibility: hidden;}
+    # </style>
+    # """
+    # st.markdown(hide_st_style, unsafe_allow_html=True)
     
     st.title("Hi, I'm Cooper!")
 
