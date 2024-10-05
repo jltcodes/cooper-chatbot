@@ -46,7 +46,7 @@ def get_vector_store(text_chunks, api_key):
 def get_conversational_chain():
     # Updated prompt template to use 'documents' as the variable name
     prompt_template = """
-        Answer the question in detail using the provided context. If the answer is not available, respond with:
+        Answer the question in as detailed as posible using the provided context. If the answer is not available, respond with:
         "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊". 
         Do not provide incorrect answers.
 
