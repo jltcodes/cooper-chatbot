@@ -136,12 +136,6 @@ def main():
     # Define the names of the sheets you want to access
     sheet_names = ["general_data", "schedule_data"]
 
-    # Custom placeholder for loading message
-    loading_placeholder = st.empty()
-    
-    with loading_placeholder.container():
-        st.text("")
-
     # Start fetching data in a separate thread
     data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
     data_fetch_thread.start()
