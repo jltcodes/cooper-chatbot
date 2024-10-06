@@ -68,6 +68,7 @@ def get_conversational_chain():
         - You're always ready to assist the user with their queries.
         - Act like a human and maintain a friendly tone throughout the conversation.
         - You're cool, friendly, and always ready to help!
+        - If the user says "no", "I'm good" or something similar, respond with: "Alright! Feel free to ask me anything if you need help."
 
         Context:
         {documents}
@@ -141,8 +142,6 @@ def main():
     <style>
     [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
         width: 244px;
-    }
-
     </style>
     """,
     unsafe_allow_html=True,
@@ -166,22 +165,24 @@ def main():
 
     # Home Page
     if page == "Chat":
-        st.header("Hi, I'm Cooper!")
-                
-        # Clear the cache every time the home page is called
-        clear_cache()
+        
+        with st.container():
+            st.header("Hi, I'm Cooper!")
+                    
+            # Clear the cache every time the home page is called
+            clear_cache()
 
-        # Define the names of the sheets you want to access
-        sheet_names = ["general_data", "schedule_data"]
+            # Define the names of the sheets you want to access
+            sheet_names = ["general_data", "schedule_data"]
 
-        # Start fetching data in a separate thread
-        data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
-        data_fetch_thread.start()
+            # Start fetching data in a separate thread
+            data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
+            data_fetch_thread.start()
 
-        # Ask user a question
-        user_question = st.text_input("Ask me a question...", key="user_question")
-        if user_question and api_key:
-            user_input(user_question, api_key)
+            # Ask user a question
+            user_question = st.text_input("Ask me a question...", key="user_question")
+            if user_question and api_key:
+                user_input(user_question, api_key)
 
     # About Page
     elif page == "About":
@@ -194,7 +195,7 @@ def main():
         st.write("For further assistance, please reach out to:")
         st.markdown("""
         <ul>
-            <li>Address: NCF - College of Engineering, MT. Villanueva Ave., Naga City, Philippines</li>
+            <li>Address: NCF - College of Engineering, MT. Villanueva Ave., Naga City</li>
             <li>Email: support@ncf.edu</li>
             <li>Phone: (123) 456-7890</li>
         </ul>
@@ -202,7 +203,7 @@ def main():
 
     # Instructions Page
     elif page == "Guides":
-        st.header("Tips!")
+        st.header("Tips!💡")
         st.write("Here are some tips to interact with Cooper:")
         st.markdown("""
         <ul>
