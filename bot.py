@@ -71,10 +71,10 @@ def store_unknown_question_to_sheets(question):
     try:
         existing_data = conn.read(worksheet=unknown_questions_sheet, usecols=list(range(1)), ttl=5)
         existing_data = existing_data.dropna(how="all")
-        if existing_data["unknown_questions"].str.contains(question).any():
+        if existing_data["unknown_data"].str.contains(question).any():
             st.stop()
         else:
-            data_to_add = pd.DataFrame([{"unknown_questions": question}])
+            data_to_add = pd.DataFrame([{"unknown_data": question}])
             update_df = pd.concat([existing_data, data_to_add], ignore_index=True)
             conn.update(worksheet=unknown_questions_sheet, data=update_df)
     except Exception as e:
@@ -94,7 +94,7 @@ def user_input(user_question, api_key):
         
         st.markdown(f"<div style='text-align: justify;'>{reply_text}</div>", unsafe_allow_html=True)
         
-    if "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊" in reply_text:
+    if "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else?" in reply_text:
         store_unknown_question_to_sheets(user_question)
             
 
