@@ -182,7 +182,7 @@ def main():
 
     # Instructions Page
     elif page == "Guides":
-        st.header("Tips!💡")
+        st.header("Tips!")
         st.write("Here are some tips to interact with Cooper:")
         st.markdown("""
         <ul>
