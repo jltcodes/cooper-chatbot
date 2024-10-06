@@ -167,7 +167,7 @@ def main():
     if page == "Chat":
         
         with st.container():
-            st.header("Hi, I'm Cooper!")
+            st.title("Hi, I'm Cooper!")
                     
             # Clear the cache every time the home page is called
             clear_cache()
