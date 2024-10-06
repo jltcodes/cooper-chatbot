@@ -141,7 +141,7 @@ def main():
     """
     <style>
     [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
-        width: 244px;
+        width: 100%;
     </style>
     """,
     unsafe_allow_html=True,
