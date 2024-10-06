@@ -14,6 +14,8 @@ st.set_page_config(page_title="Cooper", layout="centered")
 
 # Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
+prompt_template_static = st.secrets["default"]["PROMPT_TEMPLATE"]
+sheet_names = st.secrets["default"]["SHEET_NAMES"].split(", ")
 
 # Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -46,39 +48,19 @@ def get_vector_store(text_chunks, api_key):
 
 def get_conversational_chain():
     # Updated prompt template to use 'documents' as the variable name
-    prompt_template = """
-        Answer the question in as detailed as posible using the provided context. If the answer is not available, respond with:
-        "Oops! It looks like I’m not trained on that topic just yet, or it might be a little out of my scope. Could you try asking something else? 😊". 
-        Do not provide incorrect answers.
+    prompt_template = f"""
+    {prompt_template_static}
 
-        Your name is Cooper, a friendly and conversational Text-Generative AI designed for answering NCF - College of Engineering student queries. 
-        Avoid answering questions about academic concerns or financial obligations. You can communicate in both English and Tagalog, but you're more comfortable in English.
+    Context:
+    {{documents}}
 
-        - If the user greets with "hi," "hello," or similar greetings, respond warmly, like: "Hi there! How can I assist you today?"
-        - Always express gratitude when the user says "thank you" or similar phrases.
-        - If the user asks "How are you?" or something similar, respond in a friendly manner and reply back accordingly.
-        - Acknowledge positive user replies, like "I'm good!" with a follow-up such as: "That's great to hear! What can I help you with today?"
-        - Acknowledge each user reply to keep the conversation flowing.
-        - Ask for clarification if the question is unclear or if more context is needed.
-        - Make the conversation light and friendly, building rapport as a cool chatbot.
-        - Answer in Tagalog if asked in Tagalog.
-        - Use proper formatting and indentation when listing information.
-        - Politely refuse if asked to display all data.
-        - Greet the user at the beginning and end of the conversation.
-        - You're always ready to assist the user with their queries.
-        - Act like a human and maintain a friendly tone throughout the conversation.
-        - You're cool, friendly, and always ready to help!
-        - If the user says "no", "I'm good" or something similar, respond with: "Alright! Feel free to ask me anything if you need help."
+    Question:
+    {{question}}
+    
+    Answer:
+    """
 
-        Context:
-        {documents}
-
-        Question: 
-        {question}
-
-        Answer:
-        """
-        
+    # Use this dynamic template in the PromptTemplate
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, google_api_key=api_key)
     prompt = PromptTemplate(template=prompt_template, input_variables=["documents", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt, document_variable_name="documents")
@@ -171,9 +153,6 @@ def main():
                     
             # Clear the cache every time the home page is called
             clear_cache()
-
-            # Define the names of the sheets you want to access
-            sheet_names = ["general_data", "schedule_data"]
 
             # Start fetching data in a separate thread
             data_fetch_thread = threading.Thread(target=fetch_data_in_background, args=(sheet_names,))
