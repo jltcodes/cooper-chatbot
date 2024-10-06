@@ -14,8 +14,8 @@ st.set_page_config(page_title="Cooper", layout="centered")
 
 # Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
-prompt_template_static = st.secrets["default"]["PROMPT_TEMPLATE"]
-sheet_names = st.secrets["default"]["SHEET_NAMES"].split(", ")
+prompt_template_static = st.secrets["template"]["PROMPT_TEMPLATE"]
+sheet_names = st.secrets["sheets"]["SHEET_NAMES"].split(", ")
 
 # Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
