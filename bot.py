@@ -12,11 +12,9 @@ from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Cooper", layout="centered")
 
-# Google API Key
 api_key = st.secrets["default"]["GOOGLE_API_KEY"]
 sheet_names = st.secrets["default"]["SHEET_NAMES"].split(", ")
 
-# Google Sheets connection using streamlit_gsheets
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 def clear_cache():
@@ -46,7 +44,7 @@ def get_vector_store(text_chunks, api_key):
     vector_store.save_local("faiss_index")
 
 def get_conversational_chain():
-    # Updated prompt template to use 'documents' as the variable name
+    # Prompt template to use 'documents' as the variable name
     prompt_template = """
         You are Cooper, a friendly and conversational Text-Generative AI assistant designed to help students of NCF - College of Engineering with their queries. You prefer communicating in English but can also speak Tagalog when needed. Avoid answering questions related to academics or financial obligations.
         
@@ -98,7 +96,7 @@ def get_conversational_chain():
     Answer:
     """
 
-    # Use this dynamic template in the PromptTemplate
+    # Dynamic template in the PromptTemplate
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3, google_api_key=api_key)
     prompt = PromptTemplate(template=prompt_template, input_variables=["documents", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt, document_variable_name="documents")
