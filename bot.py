@@ -9,6 +9,8 @@ from langchain.prompts import PromptTemplate
 import pandas as pd
 import threading
 from streamlit_option_menu import option_menu
+import json
+from streamlit_lottie import st_lottie
 
 st.set_page_config(page_title="Cooper", layout="centered")
 
@@ -143,6 +145,10 @@ def fetch_data_in_background(sheet_names):
         get_vector_store(text_chunks, api_key)
         st.success("Data loaded successfully!")
 
+def load_lottiefile(filepath: str):
+    with open(filepath, "r") as f:
+        return json.load(f)
+
 # Main App
 def main():
     hide_st_style = """
@@ -185,7 +191,24 @@ def main():
     if page == "Chat":
         
         with st.container():
-            st.title("Hi, I'm Cooper!")
+            
+            col1, col2 = st.columns([1, 2])
+            
+            with col2:
+                st.write("")
+                st.title("Hi, I'm Cooper!")
+                st.caption("I'm here to help you with any questions you have about NCF - College of Engineering. Feel free to ask me anything!")
+            
+            with col1:
+                lottie_bot = load_lottiefile("lottie_files/bot.json")
+                st_lottie(
+                    lottie_bot, 
+                    speed=1, 
+                    width=200, 
+                    height=200,
+                    reverse=False,
+                    loop=True, 
+                    key="lottie_bot")
                     
             # Clear the cache every time the home page is called
             clear_cache()
@@ -202,7 +225,7 @@ def main():
     # About Page
     elif page == "About":
         st.header("About Cooper")
-        st.write(' **Collaborative Operations for Optimizing Practical Engineering Resources** (COOPER) is a text-generative AI developed in 2024 by Jay, Emil, Hans, and Erica from NCF - College of Engineering. This friendly chatbot is designed to assist students at NCF - College of Engineering. It can answer questions about various topics related to the NCF - College of Engineering and provide guidance. However, please note that Cooper cannot address queries about academic or school financial obligations.')
+        st.caption(' **Collaborative Operations for Optimizing Practical Engineering Resources** (COOPER) is a text-generative AI developed in 2024 by Jay, Emil, Hans, and Erica from NCF - College of Engineering. This friendly chatbot is designed to assist students at NCF - College of Engineering. It can answer questions about various topics related to the NCF - College of Engineering and provide guidance. However, please note that Cooper cannot address queries about academic or school financial obligations.')
 
     # Contact Page
     elif page == "Contact":
