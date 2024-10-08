@@ -8,3 +8,4 @@ st-gsheets-connection
 langchain-community
 pandas
 streamlit-option-menu
+streamlit-lottie
