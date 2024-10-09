@@ -232,7 +232,7 @@ def main():
     # Contact Page
     elif page == "Contact":
         st.header("Contact Us")
-        st.write("For further assistance, please reach out to:")
+        st.caption("For further assistance, please reach out to:")
         st.markdown("""
         <ul>
             <li>Address: NCF - College of Engineering, MT. Villanueva Ave., Naga City</li>
