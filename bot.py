@@ -179,7 +179,7 @@ def main():
         page = option_menu(
             menu_title = None, 
             options = ["Chat", "Guides", "About", "Contact"], 
-            icons = ['chat-text', 'list-ol', 'info-circle', 'telephone'],
+            icons = ['chat-text', 'list-ol', 'info-square', 'telephone'],
             menu_icon = "cast",
             styles={
                     "container": {"padding": "3px", "background-color": "#0e1117", "border-radius": "10px"},
@@ -244,7 +244,7 @@ def main():
     # Instructions Page
     elif page == "Guides":
         st.header("Tips!")
-        st.write("Here are some tips to interact with Cooper:")
+        st.caption("Here are some tips to interact with Cooper:")
         st.markdown("""
         <ul>
             <li>Ask anything related to NCF - College of Engineering.</li>
