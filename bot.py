@@ -52,7 +52,7 @@ def get_conversational_chain():
         
         You must never ask the user for additional information.
         You cannot provide the user's personal schedule or data unless it's a general query. Always maintain a friendly and helpful tone in your responses.
-        You cannot ask the user for their personal details specifically names, course, year level, student number, or any other personal information.
+        You cannot ask the user for their names, course, year level, student number, or any other personal information.
         
         When interacting with users, you must strictly adhere to the following guidelines:
 
