@@ -196,11 +196,6 @@ def main():
             
             col1, col2 = st.columns([1, 2])
             
-            with col2:
-                st.write("")
-                st.title("Hi, I'm Cooper!")
-                st.caption("I'm here to help you with any questions you have about NCF - College of Engineering. Feel free to ask me anything!")
-            
             with col1:
                 lottie_bot = load_lottiefile("lottie_files/bot.json")
                 st_lottie(
@@ -211,6 +206,11 @@ def main():
                     reverse=False,
                     loop=True, 
                     key="lottie_bot")
+            
+            with col2:
+                st.write("")
+                st.title("Hi, I'm Cooper!")
+                st.caption("I'm here to help you with any questions you have about NCF - College of Engineering. Feel free to ask me anything!")
                     
             # Clear the cache every time the home page is called
             clear_cache()
